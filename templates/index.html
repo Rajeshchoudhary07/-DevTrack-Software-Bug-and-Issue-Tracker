@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevTrack | Issue Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">D</span><div><strong>DevTrack</strong><small>Software issue tracker</small></div></div>
+    <span class="api-status"><span class="dot"></span> API workspace</span>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div><p class="eyebrow">DEVELOPMENT WORKSPACE</p><h1>Track issues.<br><span>Ship better software.</span></h1>
+      <p class="sub">A simple place to capture bugs, assign owners, and move fixes forward.</p></div>
+      <div class="hero-mark">{" }</div>
+    </section>
+    <section class="stats">
+      <article><span>Total issues</span><strong id="totalCount">0</strong></article>
+      <article><span>Open</span><strong id="openCount">0</strong></article>
+      <article><span>In progress</span><strong id="progressCount">0</strong></article>
+      <article><span>Resolved</span><strong id="resolvedCount">0</strong></article>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><h2>Issues</h2><p>Manage bugs and feature issues from one board.</p></div><button class="primary" id="newIssueBtn">＋ New issue</button></div>
+      <div class="filters">
+        <input id="searchInput" placeholder="Search title, description, assignee..." aria-label="Search issues">
+        <select id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option>Open</option><option>In Progress</option><option>Resolved</option></select>
+        <select id="priorityFilter" aria-label="Filter by priority"><option value="">All priorities</option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select>
+      </div>
+      <div id="issueList" class="issue-list"><div class="empty">Loading issues...</div></div>
+    </section>
+    <footer>DevTrack · Built with Flask, SQLAlchemy, SQLite, REST APIs and Pytest</footer>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><div><p class="eyebrow">ISSUE DETAILS</p><h2 id="modalTitle">Create an issue</h2></div><button class="icon-btn" id="closeModal" aria-label="Close">×</button></div>
+      <form id="issueForm">
+        <input type="hidden" id="issueId">
+        <label>Title <input id="title" maxlength="160" required placeholder="e.g. Login fails after password reset"></label>
+        <label>Description <textarea id="description" rows="3" placeholder="Steps to reproduce, expected result, and actual result..."></textarea></label>
+        <div class="form-grid">
+          <label>Priority<select id="priority"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></label>
+          <label>Status<select id="status"><option>Open</option><option>In Progress</option><option>Resolved</option></select></label>
+        </div>
+        <label>Assignee <input id="assignee" placeholder="Name or Unassigned"></label>
+        <p class="form-error" id="formError"></p>
+        <div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Cancel</button><button type="submit" class="primary">Save issue</button></div>
+      </form>
+    </section>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
